@@ -1,0 +1,42 @@
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy-bot:
+    name: Deploy Bot to Railway
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Railway CLI
+        run: npm install -g @railway/cli
+
+      - name: Deploy to Railway
+        run: railway up --service bot
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+          BITMEX_API_KEY: ${{ secrets.BITMEX_API_KEY }}
+          BITMEX_SECRET: ${{ secrets.BITMEX_SECRET }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          BOT_SECRET: ${{ secrets.BOT_SECRET }}
+
+  deploy-dashboard:
+    name: Deploy Dashboard to Vercel
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Vercel CLI
+        run: npm install -g vercel
+
+      - name: Deploy to Vercel
+        run: |
+          cd dashboard
+          vercel deploy --prod --token=${{ secrets.VERCEL_TOKEN }} \
+            -e NEXT_PUBLIC_BOT_URL=${{ secrets.RAILWAY_BOT_URL }} \
+            -e NEXT_PUBLIC_BOT_SECRET=${{ secrets.BOT_SECRET }}
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
