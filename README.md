@@ -122,3 +122,14 @@ VERCEL_TOKEN           ← Vercel 배포 토큰
 | Vercel | $0 |
 | Anthropic API | $3~8 |
 | **합계** | **$3~13/월** |
+
+---
+
+## 📊 개발 현황 <!-- jh-progress -->
+
+| 항목 | 내용 |
+|------|------|
+| **진행률** | `█████████████░░░░░░░` **65%** |
+| **레포** | [bitmex-ai-bot](https://github.com/jaeha81/bitmex-ai-bot) |
+
+> 진행률: 65%
